@@ -130,7 +130,7 @@ def main():
         )
         server_response = upload_img_to_server(
             filepath=filepath,
-            server_address=server_address,
+            url=server_address,
         )
         photo_owner_id, photo_id = save_img_to_group_album(
             access_token=access_token,
