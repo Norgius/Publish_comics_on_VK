@@ -28,9 +28,9 @@ https://oauth.vk.com/blank.html#access_token=vk1.a.Qg5KUJbNlVtk8e4l0tf12Q5n-sv01
 ```
 vk1.a.Qg5KUJbNlVtk8e4l0tf12Q5n-sv01CiuKox04yxxsCIlrsO2V9aZkWo_IxoB2YjcEJuuNVG2QyrGchqpKRY7BdsHlumFQ4D4OyZSHitA52NEDnVDKbGQRnEmF_p7O31Rt5MYPByb0y3qaJe8Auc6IT9fvbu-sKGcN2XcuvaKu1fDsDdAdUd1nlNUdV
 ```
-Сохраняем ключ в коревой директории проекта в файле `.env` под именем `COMICS_ACCESS_TOKEN=`
+Сохраняем ключ в коревой директории проекта в файле `.env` под именем `ACCESS_TOKEN_TO_COMICS_VK=`
 
-Также в `.env` потребуется записать `id` нашей группы. Чтобы его получить можно воспользоваться сайтом [regvk.com](https://regvk.com/id/). Сохраняем его под именем `COMICS_GROUP_ID=`
+Также в `.env` потребуется записать `id` нашей группы. Чтобы его получить можно воспользоваться сайтом [regvk.com](https://regvk.com/id/). Сохраняем его под именем `GROUP_ID_COMICS_VK=`
 
 ## Как установить
 
