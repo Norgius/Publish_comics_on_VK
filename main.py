@@ -1,6 +1,5 @@
 import os
 from random import randint
-from time import sleep
 import sys
 import logging
 from logging.handlers import RotatingFileHandler
@@ -77,7 +76,7 @@ def save_img_to_group_album(access_token, group_id, server_response):
 
 
 def post_comic_on_group_wall(access_token, group_id, comics_comment,
-                             photo_owner_id, photo_id):
+                             photo_owner_id, photo_id):   
     logger.info('post_comic_on_group_wall() was called')
     url = 'https://api.vk.com/method/wall.post'
     params = {'access_token': access_token, 'v': API_VERSION,
@@ -87,7 +86,6 @@ def post_comic_on_group_wall(access_token, group_id, comics_comment,
               }
     response = requests.post(url, params=params)
     response.raise_for_status()
-    os.remove(FILEPATH)
 
 
 def main():
@@ -98,32 +96,28 @@ def main():
     handler = RotatingFileHandler('app.log', maxBytes=10000, backupCount=2)
     logger.addHandler(handler)
     load_dotenv()
-    access_token = os.getenv('COMICS_ACCESS_TOKEN')
-    group_id = os.getenv('COMICS_GROUP_ID')
-    while True:
-        try:
-            comics_amount = receive_comic()
-            random_number = randint(1, comics_amount)
-            comics_comment = receive_comic(random_number)
-            server_address = get_server_address_for_uploading_photo(
-                                              access_token, group_id)
-            server_response = upload_img_to_server(server_address)
-            photo_owner_id, photo_id = save_img_to_group_album(access_token,
-                                                               group_id,
-                                                               server_response)
-            post_comic_on_group_wall(access_token, group_id, comics_comment,
-                                     photo_owner_id, photo_id)
-            sleep(INTERVAL)
-        except requests.exceptions.HTTPError as http_er:
-            logger.warning(f'\n{http_er}\n')
-            sys.stderr.write(f'\n{http_er}\n')
-            sleep(30)
-            continue
-        except requests.exceptions.ConnectionError as connect_er:
-            logger.warning(f'\n{connect_er}\n')
-            sys.stderr.write(f'\n{connect_er}\n')
-            sleep(30)
-            continue
+    access_token = os.getenv('ACCESS_TOKEN_TO_COMICS_VK')
+    group_id = os.getenv('GROUP_ID_COMICS_VK')
+    try:
+        comics_amount = receive_comic()
+        random_number = randint(1, comics_amount)
+        comics_comment = receive_comic(random_number)
+        server_address = get_server_address_for_uploading_photo(
+                                          access_token, group_id)
+        server_response = upload_img_to_server(server_address)
+        photo_owner_id, photo_id = save_img_to_group_album(access_token,
+                                                           group_id,
+                                                           server_response)
+        post_comic_on_group_wall(access_token, group_id, comics_comment,
+                                 photo_owner_id, photo_id)
+    except requests.exceptions.HTTPError as http_er:
+        logger.warning(f'\n{http_er}\n')
+        sys.stderr.write(f'\n{http_er}\n')
+    except requests.exceptions.ConnectionError as connect_er:
+        logger.warning(f'\n{connect_er}\n')
+        sys.stderr.write(f'\n{connect_er}\n')
+    finally:
+        os.remove(FILEPATH)
 
 
 if __name__ == '__main__':
