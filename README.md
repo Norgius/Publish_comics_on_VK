@@ -42,4 +42,3 @@ pip install -r requirements.txt
 ```
 python main.py
 ```
-Скрипт будет публиковать посты с комиксами один раз в сутки.
