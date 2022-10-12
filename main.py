@@ -111,8 +111,8 @@ def main():
     )
     logger.addHandler(handler)
     load_dotenv()
-    access_token = os.getenv('ACCESS_TOKEN_TO_COMICS_VK')
-    group_id = os.getenv('GROUP_ID_COMICS_VK')
+    access_token = os.getenv('VK_ACCESS_TOKEN')
+    group_id = os.getenv('VK_GROUP_ID')
     filepath = './comics.png'
     api_version = 5.131
     sender = 0
