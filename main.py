@@ -117,35 +117,35 @@ def main():
     api_version = 5.131
     sender = 0
     try:
-        comics_amount = receive_comic(filepath=filepath)
+        comics_amount = receive_comic(filepath)
         random_number = randint(1, comics_amount)
         comics_comment = receive_comic(
-            filepath=filepath,
-            comics_number=random_number,
+            filepath,
+            random_number,
         )
         server_address = get_server_address_for_uploading_photo(
-            access_token=access_token,
-            api_version=api_version,
-            group_id=group_id,
+            access_token,
+            api_version,
+            group_id,
         )
         server_response = upload_img_to_server(
-            filepath=filepath,
-            url=server_address,
+            filepath,
+            server_address,
         )
         photo_owner_id, photo_id = save_img_to_group_album(
-            access_token=access_token,
-            api_version=api_version,
-            group_id=group_id,
-            server_response=server_response,
+            access_token,
+            api_version,
+            group_id,
+            server_response,
         )
         post_comic_on_group_wall(
-            access_token=access_token,
-            api_version=api_version,
-            group_id=group_id,
-            comics_comment=comics_comment,
-            sender=sender,
-            photo_owner_id=photo_owner_id,
-            photo_id=photo_id,
+            access_token,
+            api_version,
+            group_id,
+            comics_comment,
+            sender,
+            photo_owner_id,
+            photo_id,
         )
     except requests.exceptions.HTTPError as http_er:
         logger.warning(f'\n{http_er}\n')
